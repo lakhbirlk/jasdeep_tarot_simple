@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Dr. Jasdeep Kaur | Tarot, Angel Reading & Spiritual Guidance</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mystic: {
+                            900: '#0b0c10', // Dark Background
+                            800: '#15172b', // Card background
+                            700: '#1f1a3a', // Deep PurpleAccent
+                            600: '#2d2554',
+                            gold: '#d4af37',  // Primary Accent Gold
+                            goldLight: '#f3e5ab',
+                            goldDark: '#aa882c',
+                            lavender: '#e2daeb',
+                            muted: '#9a97b0'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.25)',
+                        'gold-glow-lg': '0 0 40px rgba(212, 175, 55, 0.4)',
+                        'purple-glow': '0 0 30px rgba(31, 26, 58, 0.6)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Card Flip Animation */
+        body {
+            background-color: #0b0c10;
+            color: #e2daeb;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa882c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border {
+            border-image: linear-gradient(135deg, #f3e5ab, #d4af37, #aa882c) 1;
+        }
+
+        /* Card Flip 3D Effect */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Star Sparkle Effect */
+        @keyframes pulse-star {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .star-sparkle {
+            animation: pulse-star 3s ease-in-out infinite;
+        }
+
+        /* Glassmorphic Cards */
+        .glass-card {
+            background: rgba(21, 23, 43, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0c10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f1a3a;
+            border-radius: 4px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between">
+
+    <!-- Background Stars Particles (Canvas) -->
+    <canvas id="starsCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="sticky top-0 z-50 glass-card border-b border-mystic-gold/10 bg-mystic-900/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-full border border-mystic-gold/50 flex items-center justify-center bg-mystic-700/50 group-hover:border-mystic-gold transition-colors duration-300">
+                    <i class="fa-solid fa-sparkles text-mystic-gold text-lg star-sparkle"></i>
+                </div>
+                <div>
+                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-wide text-white group-hover:text-mystic-gold transition-colors duration-300">
+                        Tarot Dr. Jasdeep Kaur
+                    </span>
+                    <p class="text-[10px] text-mystic-gold/80 tracking-widest uppercase font-medium">Spiritual Guidance & Clarity</p>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#about" class="text-mystic-lavender hover:text-mystic-gold transition-colors">About</a>
+                <a href="#services" class="text-mystic-lavender hover:text-mystic-gold transition-colors">Services</a>
+                <a href="#daily-card" class="text-mystic-lavender hover:text-mystic-gold transition-colors">Daily Reading</a>
+                <a href="#consultation" class="text-mystic-lavender hover:text-mystic-gold transition-colors">Consultation Hours</a>
+                <a href="#testimonials" class="text-mystic-lavender hover:text-mystic-gold transition-colors">Testimonials</a>
+                <a href="#contact" class="text-mystic-lavender hover:text-mystic-gold transition-colors">Contact</a>
+            </nav>
+
+            <!-- CTA Header Button -->
+            <div class="hidden sm:flex items-center space-x-3">
+                <button onclick="openBookingModal('General Consultation')" class="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-mystic-gold to-mystic-goldDark text-mystic-900 hover:shadow-gold-glow hover:scale-105 transition-all duration-300">
+                    Book Session
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-mystic-lavender hover:text-mystic-gold focus:outline-none p-2">
+                <i class="fa-solid fa-bars-staggered text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-mystic-800/95 border-b border-mystic-gold/20 px-6 py-6 space-y-4">
+            <a href="#about" class="mobile-nav-link block text-base text-mystic-lavender hover:text-mystic-gold">About Dr. Jasdeep</a>
+            <a href="#services" class="mobile-nav-link block text-base text-mystic-lavender hover:text-mystic-gold">Services</a>
+            <a href="#daily-card" class="mobile-nav-link block text-base text-mystic-lavender hover:text-mystic-gold">Daily Guidance Draw</a>
+            <a href="#consultation" class="mobile-nav-link block text-base text-mystic-lavender hover:text-mystic-gold">Consultation Hours</a>
+            <a href="#testimonials" class="mobile-nav-link block text-base text-mystic-lavender hover:text-mystic-gold">Testimonials</a>
+            <a href="#contact" class="mobile-nav-link block text-base text-mystic-lavender hover:text-mystic-gold">Contact Us</a>
+            <div class="pt-4 border-t border-mystic-700/50 flex flex-col gap-3">
+                <button onclick="openBookingModal('General Consultation')" class="w-full py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-mystic-gold to-mystic-goldDark text-mystic-900 shadow-gold-glow">
+                    Book Session Now
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="z-10 relative">
+
+        <!-- HERO SECTION -->
+        <section class="relative min-h-[85vh] flex items-center justify-center pt-12 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+            <!-- Background Glow Orbs -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-mystic-700/30 rounded-full blur-[120px] pointer-events-none"></div>
+            <div class="absolute bottom-10 right-10 w-72 h-72 bg-mystic-gold/10 rounded-full blur-[90px] pointer-events-none"></div>
+
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-mystic-gold/30 bg-mystic-700/40 text-mystic-gold text-xs font-medium tracking-widest uppercase mb-8 shadow-inner">
+                    <i class="fa-solid fa-moon text-xs"></i> Unveil Your Divine Destiny
+                </div>
+
+                <!-- Headline -->
+                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 leading-tight">
+                    Seek Clarity, Inner Peace & <span class="gold-gradient-text block mt-1">Spiritual Alignment</span>
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="text-base sm:text-xl text-mystic-lavender/90 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                    Empowering your life journey with intuitive Tarot insights, high-vibrational Angel Card readings, and transformative spiritual guidance with <strong class="text-mystic-gold font-normal">Dr. Jasdeep Kaur</strong>.
+                </p>
+
+                <!-- Action CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="openBookingModal('Personalized Reading')" class="w-full sm:w-auto px-8 py-4 rounded-full text-sm font-semibold tracking-wider uppercase bg-gradient-to-r from-mystic-gold via-mystic-goldLight to-mystic-gold text-mystic-900 hover:shadow-gold-glow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calendar-check"></i> Book A Private Session
+                    </button>
+                    
+                    <a href="mailto:advjasdeepkaur@gmail.com?subject=Inquiry%20for%20Tarot%20%26%20Spiritual%20Guidance" class="w-full sm:w-auto px-8 py-4 rounded-full text-sm font-semibold tracking-wider uppercase bg-mystic-800 border border-mystic-gold/40 text-mystic-lavender hover:text-mystic-gold hover:border-mystic-gold hover:bg-mystic-700/50 transition-all duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-envelope text-mystic-gold text-lg"></i> Email Inquiry
+                    </a>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="mt-16 grid grid-cols-2 sm:grid-cols-3 gap-6 pt-10 border-t border-mystic-gold/10 text-center">
+                    <div>
+                        <div class="font-serif text-2xl sm:text-3xl font-bold text-mystic-gold">100%</div>
+                        <p class="text-xs text-mystic-muted uppercase tracking-wider mt-1">Confidential & Empathetic</p>
+                    </div>
+                    <div>
+                        <div class="font-serif text-2xl sm:text-3xl font-bold text-mystic-gold">Intuitive</div>
+                        <p class="text-xs text-mystic-muted uppercase tracking-wider mt-1">Angel & Tarot Reader</p>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <div class="font-serif text-2xl sm:text-3xl font-bold text-mystic-gold">Global</div>
+                        <p class="text-xs text-mystic-muted uppercase tracking-wider mt-1">Worldwide Virtual Sessions</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION WITH IMAGE -->
+        <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 lg:p-16 border border-mystic-gold/20 relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Portrait Image Frame Column -->
+                    <div class="lg:col-span-5 relative flex justify-center">
+                        <div class="relative w-72 h-[420px] sm:w-80 sm:h-[460px] rounded-3xl p-1 bg-gradient-to-b from-mystic-gold/60 via-mystic-gold/20 to-mystic-gold/60 shadow-gold-glow-lg group">
+                            <div class="w-full h-full rounded-[22px] overflow-hidden relative border border-mystic-gold/30 bg-mystic-800">
+                                <img src="image_1.jpeg" 
+                                     alt="Tarot Dr. Jasdeep Kaur" 
+                                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop';"
+                                     class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-mystic-900/80 via-transparent to-transparent"></div>
+                                <div class="absolute bottom-4 left-0 right-0 text-center px-4">
+                                    <h3 class="font-serif text-xl font-bold text-white drop-shadow-md">Dr. Jasdeep Kaur</h3>
+                                    <p class="text-[10px] text-mystic-gold tracking-widest uppercase font-medium mt-0.5">Tarot & Angel Card Reader</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Column -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 text-mystic-gold text-xs font-semibold tracking-widest uppercase">
+                            <i class="fa-solid fa-star"></i> About Your Spiritual Guide
+                        </div>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white leading-tight">
+                            Compassionate Wisdom to Guide Your Life Journey
+                        </h2>
+                        <p class="text-mystic-lavender/90 text-base leading-relaxed">
+                            Welcome. I am <strong>Tarot Dr. Jasdeep Kaur</strong>. My mission is to provide you with an authentic, safe, and deeply insightful space to explore life's choices, overcome energetic blockages, and reconnect with your inner wisdom.
+                        </p>
+                        <p class="text-mystic-lavender/80 text-sm leading-relaxed">
+                            Whether you are facing uncertainty in your career, navigating complex relationship dynamics, or seeking high-vibrational direction through Angel Cards, my readings combine deep intuitive clarity with practical guidance. Through non-judgmental counsel, we illuminate the answers already resting within you.
+                        </p>
+
+                        <!-- Highlights List -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-mystic-gold/10 border border-mystic-gold/40 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-mystic-gold text-xs"></i>
+                                </div>
+                                <span class="text-sm text-mystic-lavender">In-depth Tarot & Guidance Spreads</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-mystic-gold/10 border border-mystic-gold/40 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-mystic-gold text-xs"></i>
+                                </div>
+                                <span class="text-sm text-mystic-lavender">Angelic Energy Messages</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-mystic-gold/10 border border-mystic-gold/40 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-mystic-gold text-xs"></i>
+                                </div>
+                                <span class="text-sm text-mystic-lavender">Personalized Life Path Alignment</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-mystic-gold/10 border border-mystic-gold/40 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-mystic-gold text-xs"></i>
+                                </div>
+                                <span class="text-sm text-mystic-lavender">Strictly Private & Confidential</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <button onclick="openBookingModal('General Inquiry')" class="px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-mystic-700 hover:bg-mystic-600 border border-mystic-gold/30 text-mystic-gold hover:text-white transition-all">
+                                Connect With Dr. Jasdeep
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 text-mystic-gold text-xs font-semibold tracking-widest uppercase mb-3">
+                    <i class="fa-solid fa-sun"></i> Sacred Offerings
+                </div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">Services Offered</h2>
+                <p class="text-mystic-lavender/80 text-sm sm:text-base">
+                    Tailored reading sessions designed to provide divine clarity, emotional healing, and strategic life decisions.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Service 1: Tarot Reading -->
+                <div class="glass-card rounded-2xl p-8 flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 relative group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-mystic-gold/5 rounded-bl-full pointer-events-none group-hover:bg-mystic-gold/10 transition-colors"></div>
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-mystic-700/60 border border-mystic-gold/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-cards-blank text-2xl text-mystic-gold"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-3">Tarot Card Reading</h3>
+                        <p class="text-mystic-lavender/80 text-sm leading-relaxed mb-6">
+                            Gain profound clarity on love, marriage, career trajectory, financial choices, and personal decisions through detailed card spreads.
+                        </p>
+                        <ul class="space-y-2 mb-8 text-xs text-mystic-muted">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Love & Relationship Compatibility</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Career & Business Milestones</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Decision-Making Guidance</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Tarot Card Reading')" class="w-full py-3 rounded-xl border border-mystic-gold/30 text-mystic-gold font-semibold text-xs tracking-wider uppercase hover:bg-mystic-gold hover:text-mystic-900 transition-colors">
+                        Book Reading
+                    </button>
+                </div>
+
+                <!-- Service 2: Angel Card Reading -->
+                <div class="glass-card rounded-2xl p-8 flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 relative group border-mystic-gold/40 shadow-purple-glow">
+                    <div class="absolute -top-3 right-6 bg-mystic-gold text-mystic-900 text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full">
+                        Popular
+                    </div>
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-mystic-700/60 border border-mystic-gold/50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-feather-pointed text-2xl text-mystic-gold"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-3">Angel Card Reading</h3>
+                        <p class="text-mystic-lavender/80 text-sm leading-relaxed mb-6">
+                            Receive high-vibrational messages from your Guardian Angels and Divine Beings to bring comfort, emotional healing, and reassurance.
+                        </p>
+                        <ul class="space-y-2 mb-8 text-xs text-mystic-muted">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Angelic Guidance & Affirmations</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Emotional Healing & Solace</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Higher Self Connection</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Angel Card Reading')" class="w-full py-3 rounded-xl bg-mystic-gold text-mystic-900 font-bold text-xs tracking-wider uppercase hover:shadow-gold-glow transition-all">
+                        Book Angel Reading
+                    </button>
+                </div>
+
+                <!-- Service 3: Spiritual Guidance -->
+                <div class="glass-card rounded-2xl p-8 flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 relative group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-mystic-gold/5 rounded-bl-full pointer-events-none group-hover:bg-mystic-gold/10 transition-colors"></div>
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-mystic-700/60 border border-mystic-gold/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-eye text-2xl text-mystic-gold"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-3">Spiritual Guidance & Energy Alignment</h3>
+                        <p class="text-mystic-lavender/80 text-sm leading-relaxed mb-6">
+                            Holistic mentoring to clear mental blockages, align your chakra energy, rediscover your core purpose, and elevate your spiritual growth.
+                        </p>
+                        <ul class="space-y-2 mb-8 text-xs text-mystic-muted">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Energy & Aura Alignment Counsel</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Life Purpose Discovery</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-dot text-[8px] text-mystic-gold"></i> Mindset Transformation</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Spiritual Guidance')" class="w-full py-3 rounded-xl border border-mystic-gold/30 text-mystic-gold font-semibold text-xs tracking-wider uppercase hover:bg-mystic-gold hover:text-mystic-900 transition-colors">
+                        Book Guidance Session
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- INTERACTIVE FEATURE: DAILY GUIDANCE CARD DRAW -->
+        <section id="daily-card" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 border border-mystic-gold/30 text-center relative overflow-hidden bg-gradient-to-b from-mystic-800 to-mystic-900">
+                <div class="inline-flex items-center gap-2 text-mystic-gold text-xs font-semibold tracking-widest uppercase mb-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Interactive Experience
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-3">Draw Your Daily Guidance Card</h2>
+                <p class="text-mystic-lavender/80 text-xs sm:text-sm max-w-xl mx-auto mb-8">
+                    Take a deep breath, center your thoughts, and tap the tarot card below to receive your divine message for today.
+                </p>
+
+                <!-- Interactive Card Area -->
+                <div class="flex flex-col items-center justify-center my-6">
+                    <div class="perspective-1000 w-56 h-88 sm:w-64 sm:h-96 cursor-pointer group" id="cardContainer" onclick="flipCard()">
+                        <div id="cardInner" class="transform-style-3d relative w-full h-full rounded-2xl shadow-purple-glow">
+                            
+                            <!-- Card Back (Unflipped) -->
+                            <div class="backface-hidden absolute inset-0 w-full h-full rounded-2xl border-2 border-mystic-gold/60 bg-gradient-to-br from-mystic-700 via-mystic-800 to-mystic-900 p-4 flex flex-col items-center justify-between text-center select-none group-hover:border-mystic-gold">
+                                <div class="w-full h-full rounded-xl border border-mystic-gold/30 flex flex-col items-center justify-between p-4 relative overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-mystic-700/80 to-mystic-900">
+                                    <i class="fa-solid fa-star text-mystic-gold/40 text-xs self-start"></i>
+                                    <i class="fa-solid fa-star text-mystic-gold/40 text-xs self-end"></i>
+                                    
+                                    <div class="my-auto flex flex-col items-center gap-3">
+                                        <div class="w-16 h-16 rounded-full border border-mystic-gold/50 flex items-center justify-center bg-mystic-800/80 text-mystic-gold">
+                                            <i class="fa-solid fa-eye text-2xl animate-pulse"></i>
+                                        </div>
+                                        <p class="font-serif text-xs text-mystic-gold tracking-widest uppercase">Tap To Reveal Wisdom</p>
+                                    </div>
+
+                                    <i class="fa-solid fa-star text-mystic-gold/40 text-xs self-end"></i>
+                                    <i class="fa-solid fa-star text-mystic-gold/40 text-xs self-start"></i>
+                                </div>
+                            </div>
+
+                            <!-- Card Front (Flipped Message Revealed) -->
+                            <div class="rotate-y-180 backface-hidden absolute inset-0 w-full h-full rounded-2xl border-2 border-mystic-gold bg-mystic-800 p-5 flex flex-col items-center justify-between text-center">
+                                <div class="w-full h-full rounded-xl border border-mystic-gold/30 p-4 flex flex-col items-center justify-between bg-gradient-to-b from-mystic-900 to-mystic-800">
+                                    <div class="text-mystic-gold text-2xl pt-2" id="cardIcon">
+                                        <i class="fa-solid fa-sun"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-serif text-xl font-bold text-white mb-2" id="cardTitle">The Sun</h4>
+                                        <p class="text-xs text-mystic-lavender/90 leading-relaxed font-light" id="cardDesc">
+                                            Success, joy, and divine clarity are shining upon your path. Trust your energy today!
+                                        </p>
+                                    </div>
+                                    <div class="text-[10px] text-mystic-gold/70 tracking-widest uppercase pb-1">Dr. Jasdeep Kaur Daily Blessing</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Reset & Action Buttons -->
+                    <div class="mt-8 flex gap-4">
+                        <button id="resetCardBtn" onclick="resetCard()" class="hidden px-5 py-2 rounded-full border border-mystic-gold/40 text-mystic-gold text-xs font-semibold hover:bg-mystic-gold/10 transition-colors">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Draw Another Card
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONSULTATION HOURS & EMAIL CONTACT SECTION -->
+        <section id="consultation" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Left Details Box -->
+                <div class="lg:col-span-7 glass-card rounded-3xl p-8 sm:p-12 border border-mystic-gold/30 flex flex-col justify-between">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-mystic-gold text-xs font-semibold tracking-widest uppercase mb-3">
+                            <i class="fa-solid fa-clock"></i> Schedule & Connect
+                        </div>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-6">Consultation Hours & Inquiries</h2>
+                        <p class="text-mystic-lavender/80 text-sm mb-8 leading-relaxed">
+                            Schedule a convenient virtual consultation from anywhere around the globe. All inquiries and appointment bookings are handled with prompt personal care.
+                        </p>
+
+                        <div class="space-y-6 text-sm">
+                            <!-- Working Hours -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-mystic-700/60 border border-mystic-gold/30 flex items-center justify-center text-mystic-gold shrink-0">
+                                    <i class="fa-solid fa-clock text-base"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-mystic-muted uppercase tracking-wider font-semibold">Office Hours</p>
+                                    <p class="text-white font-medium mt-1">10:00 AM – 06:00 PM (Monday to Saturday)</p>
+                                    <p class="text-xs text-mystic-gold/80 mt-0.5">By Prior Appointment Only</p>
+                                </div>
+                            </div>
+
+                            <!-- Professional Email -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-mystic-700/60 border border-mystic-gold/30 flex items-center justify-center text-mystic-gold shrink-0">
+                                    <i class="fa-solid fa-envelope text-base"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-mystic-muted uppercase tracking-wider font-semibold">Professional Email</p>
+                                    <a href="mailto:advjasdeepkaur@gmail.com" class="text-white hover:text-mystic-gold font-medium mt-1 block">advjasdeepkaur@gmail.com</a>
+                                    <p class="text-xs text-mystic-muted mt-0.5">Replies sent within 24 business hours</p>
+                                </div>
+                            </div>
+
+                            <!-- Session Mode -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-mystic-700/60 border border-mystic-gold/30 flex items-center justify-center text-mystic-gold shrink-0">
+                                    <i class="fa-solid fa-globe text-base"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-mystic-muted uppercase tracking-wider font-semibold">Session Availability</p>
+                                    <p class="text-white font-medium mt-1">Online & Virtual Readings Worldwide</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Quick Connect Box -->
+                <div class="lg:col-span-5 glass-card rounded-3xl p-8 border border-mystic-gold/20 bg-gradient-to-br from-mystic-800 to-mystic-700/40 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-3">Email Appointment Booking</h3>
+                        <p class="text-mystic-lavender/80 text-xs sm:text-sm mb-6 leading-relaxed">
+                            Need a reading or have questions regarding available slots? Send an email inquiry to book your consultation directly.
+                        </p>
+
+                        <div class="p-4 rounded-xl bg-mystic-900/80 border border-mystic-gold/20 mb-6 space-y-3 text-xs">
+                            <div class="flex justify-between text-mystic-lavender">
+                                <span>Operating Hours</span>
+                                <span class="text-mystic-gold font-bold">10:00 AM – 6:00 PM</span>
+                            </div>
+                            <div class="flex justify-between text-mystic-lavender">
+                                <span>Session Format</span>
+                                <span class="text-white">Virtual / Online</span>
+                            </div>
+                            <div class="flex justify-between text-mystic-lavender">
+                                <span>Primary Contact</span>
+                                <span class="text-mystic-gold">advjasdeepkaur@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="mailto:advjasdeepkaur@gmail.com?subject=Booking%20Request%20-%20Tarot%20%2F%20Angel%20Reading" class="w-full py-4 rounded-2xl bg-gradient-to-r from-mystic-gold to-mystic-goldDark text-mystic-900 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all hover:shadow-gold-glow">
+                        <i class="fa-solid fa-paper-plane text-base"></i> Send Booking Email
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS SECTION -->
+        <section id="testimonials" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 text-mystic-gold text-xs font-semibold tracking-widest uppercase mb-3">
+                    <i class="fa-solid fa-quote-left"></i> Words of Reflection
+                </div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">Client Transformation Stories</h2>
+                <p class="text-mystic-lavender/80 text-sm sm:text-base">
+                    Read how intuitive guidance helped clients find light, confidence, and peace.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="glass-card rounded-2xl p-8 border border-mystic-gold/20 flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-mystic-gold text-xs mb-4 gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-mystic-lavender/90 text-sm italic leading-relaxed mb-6">
+                            "Dr. Jasdeep's Tarot reading gave me so much peace during a critical career transition. Her insights were remarkably accurate, empathetic, and truly empowering."
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-base font-bold text-white">Ananya M.</h4>
+                        <p class="text-[11px] text-mystic-gold">Online Consultation</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="glass-card rounded-2xl p-8 border border-mystic-gold/20 flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-mystic-gold text-xs mb-4 gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-mystic-lavender/90 text-sm italic leading-relaxed mb-6">
+                            "The Angel Card Reading was a serene experience. Dr. Jasdeep helped me identify emotional blockages I was holding on to and guided me toward healing."
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-base font-bold text-white">Rohan S.</h4>
+                        <p class="text-[11px] text-mystic-gold">Virtual Session</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="glass-card rounded-2xl p-8 border border-mystic-gold/20 flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-mystic-gold text-xs mb-4 gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-mystic-lavender/90 text-sm italic leading-relaxed mb-6">
+                            "Her spiritual mentoring sessions transformed my daily mindset. Highly recommend reaching out to her for a reading!"
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-base font-bold text-white">Priya K.</h4>
+                        <p class="text-[11px] text-mystic-gold">Online Guidance</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT & BOOKING FORM SECTION -->
+        <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 border border-mystic-gold/30">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <div class="inline-flex items-center gap-2 text-mystic-gold text-xs font-semibold tracking-widest uppercase mb-2">
+                        <i class="fa-solid fa-paper-plane"></i> Book Your Session
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-3">Schedule A Consultation</h2>
+                    <p class="text-mystic-lavender/80 text-xs sm:text-sm">
+                        Fill in your details below to send an appointment request directly via email to Dr. Jasdeep Kaur.
+                    </p>
+                </div>
+
+                <!-- Booking Form -->
+                <form id="bookingForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-mystic-lavender mb-2">Your Full Name *</label>
+                            <input type="text" id="formName" required placeholder="e.g. Simran Sharma" class="w-full px-4 py-3 rounded-xl bg-mystic-900/90 border border-mystic-gold/20 text-white placeholder-mystic-muted/50 focus:outline-none focus:border-mystic-gold text-sm">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-mystic-lavender mb-2">Email Address *</label>
+                            <input type="email" id="formEmail" required placeholder="name@example.com" class="w-full px-4 py-3 rounded-xl bg-mystic-900/90 border border-mystic-gold/20 text-white placeholder-mystic-muted/50 focus:outline-none focus:border-mystic-gold text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Service Type -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-mystic-lavender mb-2">Select Service *</label>
+                            <select id="formService" required class="w-full px-4 py-3 rounded-xl bg-mystic-900/90 border border-mystic-gold/20 text-white focus:outline-none focus:border-mystic-gold text-sm">
+                                <option value="Tarot Card Reading">Tarot Card Reading</option>
+                                <option value="Angel Card Reading">Angel Card Reading</option>
+                                <option value="Spiritual Guidance">Spiritual Guidance & Alignment</option>
+                                <option value="General Consultation">General Consultation</option>
+                            </select>
+                        </div>
+
+                        <!-- Preferred Date -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-mystic-lavender mb-2">Preferred Date</label>
+                            <input type="date" id="formDate" class="w-full px-4 py-3 rounded-xl bg-mystic-900/90 border border-mystic-gold/20 text-white focus:outline-none focus:border-mystic-gold text-sm">
+                        </div>
+                    </div>
+
+                    <!-- Message / Note -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-mystic-lavender mb-2">Questions or Specific Topic</label>
+                        <textarea id="formMessage" rows="3" placeholder="Briefly describe what you would like clarity on (Love, Career, Personal Growth, etc.)..." class="w-full px-4 py-3 rounded-xl bg-mystic-900/90 border border-mystic-gold/20 text-white placeholder-mystic-muted/50 focus:outline-none focus:border-mystic-gold text-sm"></textarea>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="pt-4">
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-mystic-gold via-mystic-goldLight to-mystic-gold text-mystic-900 font-bold text-xs uppercase tracking-wider hover:shadow-gold-glow transition-all">
+                            Submit Request via Email
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-card border-t border-mystic-gold/20 bg-mystic-900/90 pt-16 pb-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                
+                <!-- Brand Column -->
+                <div class="md:col-span-2 space-y-4">
+                    <a href="#" class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full border border-mystic-gold flex items-center justify-center bg-mystic-700">
+                            <i class="fa-solid fa-sparkles text-mystic-gold text-xs"></i>
+                        </div>
+                        <span class="font-serif text-xl font-bold text-white">Tarot Dr. Jasdeep Kaur</span>
+                    </a>
+                    <p class="text-xs text-mystic-lavender/70 max-w-sm leading-relaxed">
+                        Illuminating paths and empowering lives through compassionate Tarot, Angelic Card readings, and holistic spiritual guidance.
+                    </p>
+                    <div class="pt-2 flex items-center space-x-4 text-mystic-gold text-lg">
+                        <a href="mailto:advjasdeepkaur@gmail.com" class="hover:scale-110 transition-transform"><i class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-serif text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-mystic-gold/20 pb-2">Quick Links</h4>
+                    <ul class="space-y-2 text-xs text-mystic-lavender/80">
+                        <li><a href="#about" class="hover:text-mystic-gold transition-colors">About Dr. Jasdeep Kaur</a></li>
+                        <li><a href="#services" class="hover:text-mystic-gold transition-colors">Tarot & Angel Readings</a></li>
+                        <li><a href="#daily-card" class="hover:text-mystic-gold transition-colors">Daily Guidance Card Draw</a></li>
+                        <li><a href="#consultation" class="hover:text-mystic-gold transition-colors">Consultation Hours</a></li>
+                        <li><a href="#contact" class="hover:text-mystic-gold transition-colors">Book Consultation</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Summary -->
+                <div>
+                    <h4 class="font-serif text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-mystic-gold/20 pb-2">Contact Info</h4>
+                    <p class="text-xs text-mystic-lavender/80 leading-relaxed mb-2">
+                        <strong>Office Hours:</strong> 10:00 AM – 6:00 PM (Mon - Sat)
+                    </p>
+                    <p class="text-xs text-mystic-lavender/80 leading-relaxed mb-2">
+                        <strong>Availability:</strong> Virtual / Online Sessions
+                    </p>
+                    <p class="text-xs text-mystic-lavender/80 leading-relaxed">
+                        <strong>Email:</strong> advjasdeepkaur@gmail.com
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Disclaimer & Copyright -->
+            <div class="pt-8 border-t border-mystic-gold/10 text-center space-y-3">
+                <p class="text-[11px] text-mystic-muted/80 max-w-3xl mx-auto leading-relaxed">
+                    <em>Disclaimer:</em> Tarot and spiritual guidance sessions are designed for emotional clarity, self-reflection, and spiritual growth. They do not replace professional legal, medical, or financial advice.
+                </p>
+                <p class="text-xs text-mystic-muted">
+                    © <span id="yearSpan"></span> Tarot Dr. Jasdeep Kaur. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- POPUP BOOKING MODAL -->
+    <div id="bookingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card rounded-3xl max-w-md w-full p-6 sm:p-8 border border-mystic-gold/40 relative bg-mystic-900/95 shadow-purple-glow">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-mystic-muted hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full border border-mystic-gold/40 flex items-center justify-center mx-auto mb-3 bg-mystic-800 text-mystic-gold">
+                    <i class="fa-solid fa-sparkles text-xl"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-white" id="modalServiceTitle">Book Your Session</h3>
+                <p class="text-xs text-mystic-gold/90 mt-1">With Dr. Jasdeep Kaur</p>
+            </div>
+
+            <form onsubmit="handleModalSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-mystic-lavender mb-1">Your Name *</label>
+                    <input type="text" id="modalName" required placeholder="Full Name" class="w-full px-3 py-2.5 rounded-lg bg-mystic-800 border border-mystic-gold/20 text-white text-xs focus:outline-none focus:border-mystic-gold">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-mystic-lavender mb-1">Your Email *</label>
+                    <input type="email" id="modalEmail" required placeholder="name@example.com" class="w-full px-3 py-2.5 rounded-lg bg-mystic-800 border border-mystic-gold/20 text-white text-xs focus:outline-none focus:border-mystic-gold">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-mystic-lavender mb-1">Message / Note</label>
+                    <textarea id="modalMessage" rows="2" placeholder="Brief details regarding your session request..." class="w-full px-3 py-2.5 rounded-lg bg-mystic-800 border border-mystic-gold/20 text-white text-xs focus:outline-none focus:border-mystic-gold"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-mystic-gold to-mystic-goldDark text-mystic-900 font-bold text-xs uppercase tracking-wider hover:shadow-gold-glow transition-all mt-2">
+                    Send Request via Email
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT CODE -->
+    <script>
+        // Set dynamic year in footer
+        document.getElementById('yearSpan').textContent = new Date().getFullYear();
+
+        // Canvas Stars Animation
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const count = Math.floor((canvas.width * canvas.height) / 12000);
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.01 + 0.005
+                });
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) {
+                    star.speed = -star.speed;
+                }
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 175, 55, ${Math.abs(star.alpha)})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateStars);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animateStars();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking nav links
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Interactive Card Draw Feature
+        const cardDeck = [
+            {
+                title: "The Sun",
+                icon: "fa-solid fa-sun",
+                desc: "Success, joy, and divine alignment are blessing your path today. Radiate optimism!"
+            },
+            {
+                title: "The Star",
+                icon: "fa-solid fa-star",
+                desc: "Hope and spiritual renewal surround you. Trust the cosmic timing of your prayers."
+            },
+            {
+                title: "The Empress",
+                icon: "fa-solid fa-crown",
+                desc: "Abundance, creativity, and gentle nurturing energy are blossoming in your endeavors."
+            },
+            {
+                title: "Angel of Peace",
+                icon: "fa-solid fa-dove",
+                desc: "Release anxiety and let go of tension. Serenity and divine comfort protect your mind."
+            },
+            {
+                title: "Wheel of Fortune",
+                icon: "fa-solid fa-compass",
+                desc: "A positive turn of events is arriving. Embrace sudden opportunities with an open heart."
+            },
+            {
+                title: "The High Priestess",
+                icon: "fa-solid fa-moon",
+                desc: "Listen closely to your inner intuition today. Silent wisdom holds your answer."
+            }
+        ];
+
+        let isFlipped = false;
+
+        function flipCard() {
+            if (isFlipped) return;
+            isFlipped = true;
+
+            const cardInner = document.getElementById('cardInner');
+            const randomCard = cardDeck[Math.floor(Math.random() * cardDeck.length)];
+
+            document.getElementById('cardTitle').innerText = randomCard.title;
+            document.getElementById('cardDesc').innerText = randomCard.desc;
+            document.getElementById('cardIcon').innerHTML = `<i class="${randomCard.icon}"></i>`;
+
+            cardInner.classList.add('rotate-y-180');
+            document.getElementById('resetCardBtn').classList.remove('hidden');
+        }
+
+        function resetCard() {
+            const cardInner = document.getElementById('cardInner');
+            cardInner.classList.remove('rotate-y-180');
+            isFlipped = false;
+            document.getElementById('resetCardBtn').classList.add('hidden');
+        }
+
+        // Modal Controls
+        function openBookingModal(serviceName) {
+            const modal = document.getElementById('bookingModal');
+            document.getElementById('modalServiceTitle').innerText = serviceName || "Book Session";
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('modalName').value;
+            const email = document.getElementById('modalEmail').value;
+            const message = document.getElementById('modalMessage').value;
+            const service = document.getElementById('modalServiceTitle').innerText;
+
+            const subject = encodeURIComponent(`Session Inquiry: ${service}`);
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\nMessage/Note: ${message}`);
+
+            window.location.href = `mailto:advjasdeepkaur@gmail.com?subject=${subject}&body=${body}`;
+            closeBookingModal();
+        }
+
+        // Form Submit Handler (Email)
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('formName').value;
+            const email = document.getElementById('formEmail').value;
+            const service = document.getElementById('formService').value;
+            const date = document.getElementById('formDate').value || 'Flexible';
+            const message = document.getElementById('formMessage').value || 'None';
+
+            const subject = encodeURIComponent(`Reading Booking Request: ${service}`);
+            const body = encodeURIComponent(`Client Name: ${name}\nClient Email: ${email}\nRequested Service: ${service}\nPreferred Date: ${date}\nNotes: ${message}`);
+
+            window.location.href = `mailto:advjasdeepkaur@gmail.com?subject=${subject}&body=${body}`;
+        }
+    </script>
+</body>
+</html>
